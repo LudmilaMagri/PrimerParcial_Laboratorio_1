@@ -78,15 +78,15 @@ int cli_inicializarArray (Cliente* array, int limite)
 int cli_altaArray(Cliente* array, int limite, int indice, int* id)
 {
 	int retorno = -1;
-	Cliente bufferPant;
+	Cliente bufferCli;
 	if (array != NULL && limite>0 && indice<limite && indice >= 0 && id != NULL){
-		if (utn_getNombre(bufferPant.nombre,NOMBRE_LEN, "\nIngrese nombre", "\nError", 3)==0 &&
-			utn_getNombre(bufferPant.apellido, APELLIDO_LEN, "\nIngrese apellido?:", "\nError", 3) ==0 &&
-			utn_getCuit(bufferPant.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]", "\nError", 3)==0)
+		if (utn_getNombre(bufferCli.nombre,NOMBRE_LEN, "\nIngrese nombre", "\nError", 3)==0 &&
+			utn_getNombre(bufferCli.apellido, APELLIDO_LEN, "\nIngrese apellido?:", "\nError", 3) ==0 &&
+			utn_getCuit(bufferCli.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]", "\nError", 3)==0)
 		{
-			bufferPant.idCli =*id;
-			bufferPant.isEmpty = 0;
-			array[indice] = bufferPant;
+			bufferCli.idCli =*id;
+			bufferCli.isEmpty = 0;
+			array[indice] = bufferCli;
 			(*id)++;
 			retorno = 0;
 		}
@@ -104,15 +104,15 @@ int cli_altaArray(Cliente* array, int limite, int indice, int* id)
 int cli_modificarArray (Cliente* array, int limite, int indice)
 {
 	int retorno = -1;
-	Cliente bufferPant;
+	Cliente bufferCli;
 	if (array!=NULL && limite>0 && indice<limite && indice>=0 && array[indice].isEmpty ==0){
-		if (utn_getNombre(bufferPant.nombre,NOMBRE_LEN, "\nIngrese nombre", "\nError", 3)==0 &&
-			utn_getNombre(bufferPant.apellido, APELLIDO_LEN, "\nIngrese apellido?:", "\nError", 3) ==0 &&
-			utn_getCuit(bufferPant.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]", "\nError", 3)==0)
+		if (utn_getNombre(bufferCli.nombre,NOMBRE_LEN, "\nIngrese nombre", "\nError", 3)==0 &&
+			utn_getNombre(bufferCli.apellido, APELLIDO_LEN, "\nIngrese apellido?:", "\nError", 3) ==0 &&
+			utn_getCuit(bufferCli.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]", "\nError", 3)==0)
 		{
-			bufferPant.idCli = array[indice].idCli;
-			bufferPant.isEmpty = 0;
-			array[indice] = bufferPant;
+			bufferCli.idCli = array[indice].idCli;
+			bufferCli.isEmpty = 0;
+			array[indice] = bufferCli;
 			retorno = 0;
 		}
 	}
@@ -328,17 +328,17 @@ int cli_ordenarPorNombreAltura (Cliente* array, int limite)
 int cli_altaArrayForzada (Cliente* array, int limite, int indice, int* id, char* nombre, char* apellido, char* cuit)
 {
 	int respuesta = -1;
-	Cliente bufferPantalla;
+	Cliente bufferCli;
 
 	if (array != NULL && limite >0 && indice <limite && indice >= 0 && id != NULL)
 	{
-		strncpy(bufferPantalla.apellido, apellido, APELLIDO_LEN);
-		strncpy(bufferPantalla.nombre, nombre, BARBIJOS_LEN);
-		strncpy(bufferPantalla.cuit, cuit, CUIT_LEN);
+		strncpy(bufferCli.apellido, apellido, APELLIDO_LEN);
+		strncpy(bufferCli.nombre, nombre, BARBIJOS_LEN);
+		strncpy(bufferCli.cuit, cuit, CUIT_LEN);
 		respuesta = 0;
-		bufferPantalla.idCli = *id;
-		bufferPantalla.isEmpty=0;
-		array[indice] = bufferPantalla;
+		bufferCli.idCli = *id;
+		bufferCli.isEmpty=0;
+		array[indice] = bufferCli;
 		(*id)++;
 	}
 	return respuesta;
