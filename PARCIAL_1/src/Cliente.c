@@ -359,7 +359,7 @@ void cli_cargarCliente(Cliente* array, int limite, int indice, int* id)
     if (indice >= 0 )
      {
     	cli_altaArray(array, limite, indice, id);
-        cli_imprimirArray(array, limite);
+    	cli_imprimirArray(array, limite);
      }
 }
 

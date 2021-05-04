@@ -16,55 +16,15 @@
 #define CLI_LEN 100
 static const char ESTADO [2][10] ={"PENDIENTE","COBRADA"};
 
-int info_imprimirClientes(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int idCliente)
-{
-	int retorno = -1;
-	char listaCliente[CLI_LEN];
-	int i;
-	int j;
-	int flagCliente;
-	int indiceClienteLibre =0;
-	for (i=0; i<limiteCompras;i++)
-	{
-		flagCliente = 0;
-		if (arrayCompras[i].isEmpty==0) //si no esta vacio, lo analizo. Si esta vacio vuelvo al for
-		{
-			for (j=0; j<indiceClienteLibre;j++) //recorro con la j las dist posiciones de la lista de cuits
-			{
-				if (arrayCompras[i].idCliente == listaCliente[j]) //quiere decir que esta
-				{
-					flagCliente = 1; //si es igual entra aca y no lo agrega a la lista
-					break;
-				}
-			}
-			if (flagCliente ==0) //cada vez que agrego un id
-			{
-				listaCliente[indiceClienteLibre] = arrayCompras[i].idCliente;
-				indiceClienteLibre++;
-			}
-		}
-	}
-	for(j=0; j<indiceClienteLibre;j++)
-	{
-		printf ("\n\n******EL CLIENTE CON ID:  %d ******\n", listaCliente[j]);
-		info_imprimirComprasPorCliente(arrayCompras, limiteCompras, arrayCliente, limiteCliente, listaCliente[j]);
-	}
-return retorno;
-}
-
-int cli_clienteConCompras (Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int idCompra)
-{
-	int retorno = -1;
-	int i;
-	if (arrayCliente != NULL && limiteCliente >0){
-		retorno = 0;
-		for (i=0; i<limiteCliente; i++)
-		{
-			cli_imprimir(&arrayCliente [i]);
-		}
-	}
-	return retorno;
-}
+/*
+ * \brief Imprime las compras realizadas por un cliente con los datos del cliente
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param idCliente Id del cliente a comparar
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteClientes, int idCliente)
 {
 	int retorno = -1;
@@ -91,9 +51,16 @@ int info_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cli
 	printf ("\nID CLI: %-5d	- NOMBRE: %-10s	- APELLIDO: %-10s - CUIT: %-10s\n", arrayCliente[indiceArrayCliente].idCli, arrayCliente[indiceArrayCliente].nombre, arrayCliente[indiceArrayCliente].apellido, arrayCliente[indiceArrayCliente].cuit);
 	printf ("Cantidad de Compras: %d\n", contadorCompras);
 	return retorno;
-
 }
-
+/*
+ * \brief Imprime solo las compras realizadas por un cliente
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param idCliente Id del cliente a comparar
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info3_imprimirSoloComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
 {
 	int retorno = -1;
@@ -116,8 +83,17 @@ int info3_imprimirSoloComprasPorCliente(Compras* arrayCompras, int limiteCompras
 	}
 	return retorno;
 }
-
-
+/*
+ * \brief Da de alta una compra
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param indice Indice del array
+ * \param idCompras Puntero al id de Compras
+ * \param idCliente Id del cliente
+ * \return Retorna 1 (EXITO) y -1 (ERROR)
+ */
 int info_realizarComprasArray(Compras* arrayCompra, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int indice, int* idCompras, int idCliente)
 {
 	int retorno = 0;
@@ -136,11 +112,18 @@ int info_realizarComprasArray(Compras* arrayCompra, int limiteCompras, Cliente* 
 	}
 	return retorno;
 }
-
-/*Pagar compra: Se pedirá el ID de la venta y se imprimirá la información del cliente al que pertenece, luego se
-ingresará el importe pagado por el cliente, y pedirá confirmación para cambiarse de estado y se cambiará al
-estado "cobrada*/
-
+/*
+ * \brief Compara el id de compra ingresado con el array de compras,
+ * 			imprime las compras y los datos del cliente asociado
+ * 			calcula el importe por unidad y cambia el estado de la
+ * 			compra a "COBRADO"
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param idCompra Id de la compra a comparar
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info_pagarCompra(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteClientes, int idCompra)
 {
 	int retorno = -1;
@@ -181,7 +164,17 @@ int info_pagarCompra(Compras* arrayCompras, int limiteCompras, Cliente* arrayCli
 	}
 	return retorno;
 }
-
+/*
+ * \brief Compara el id de compra ingresado con el array de compras,
+ * 			imprime las compras y los datos del cliente asociado
+ * 			da de baja esa compra solo si esta en estado "PENDIENTE".
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param idCompra Id de la compra a comparar
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info_cancelarCompra(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteClientes, int idCompra)
 {
 	int retorno = -1;
@@ -221,7 +214,17 @@ int info_cancelarCompra(Compras* arrayCompras, int limiteCompras, Cliente* array
 	}
 	return retorno;
 }
-
+/*
+ * \brief Compara el id de cliente ingresado con el array de clientes,
+ * 			pone un vacio a la posicion del array de Clientes que coincide con
+ * 			lo ingresado.
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param idCompra Id de la compra a comparar
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info_borrarComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
 {
 	int retorno = -1;
@@ -241,7 +244,15 @@ int info_borrarComprasPorCliente(Compras* arrayCompras, int limiteCompras, Clien
 	}
 	return retorno;
 }
-
+/*
+ * \brief Imprime el array de Clientes y las compras de ese cliente.
+ * 		 Da de baja a un cliente
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \param arrayCliente Array de la estructura Cliente
+ * \param limiteCliente Limite del array de clientes
+ * \param auxiliarId Id a comparar
+ */
 void info_bajaDeCliente(Cliente* arrayCliente,int limiteCliente,Compras* arrayCompras,int auxiliarId,int limiteCompras)
 {
 	int respuesta;
@@ -262,7 +273,12 @@ void info_bajaDeCliente(Cliente* arrayCliente,int limiteCliente,Compras* arrayCo
 		}
 	}
 }
-
+/*
+ * \brief Cuenta e imprime el barbijo mas comprado.
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras)
 {
 	int retorno = -1;
@@ -319,7 +335,12 @@ int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras)
 	}
 	return retorno;
 }
-
+/*
+ * \brief Cuenta e imprime la cantidad de compras en estado "PENDIENTE"
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \return Retorna 1 (EXITO) y -1 (ERROR)
+ */
 
 int info_cantComprasPendientes(Compras* arrayCompras, int limiteCompras)
 {
@@ -343,7 +364,12 @@ int info_cantComprasPendientes(Compras* arrayCompras, int limiteCompras)
 	}
 	return retorno;
 }
-
+/*
+ * \brief Imprime el precio por unidad mas bajo
+ * \param arrayCompras Array de la estructura Compras
+ * \param limiteCompras Limite del array de Compras
+ * \return Retorna 1 (EXITO) y -1 (ERROR)
+ */
 
 int info_compraPrecioPorUnidadMin(Compras* arrayCompras, int limiteCompras)
 {
@@ -378,3 +404,55 @@ int info_compraPrecioPorUnidadMin(Compras* arrayCompras, int limiteCompras)
 	}
 	return retorno;
 }
+int info_imprimirClientes(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int idCliente)
+{
+	int retorno = -1;
+	char listaCliente[CLI_LEN];
+	int i;
+	int j;
+	int flagCliente;
+	int indiceClienteLibre =0;
+	for (i=0; i<limiteCompras;i++)
+	{
+		flagCliente = 0;
+		if (arrayCompras[i].isEmpty==0) //si no esta vacio, lo analizo. Si esta vacio vuelvo al for
+		{
+			for (j=0; j<indiceClienteLibre;j++) //recorro con la j las dist posiciones de la lista de cuits
+			{
+				if (arrayCompras[i].idCliente == listaCliente[j]) //quiere decir que esta
+				{
+					flagCliente = 1; //si es igual entra aca y no lo agrega a la lista
+					break;
+				}
+			}
+			if (flagCliente ==0) //cada vez que agrego un id
+			{
+				listaCliente[indiceClienteLibre] = arrayCompras[i].idCliente;
+				indiceClienteLibre++;
+			}
+		}
+	}
+	for(j=0; j<indiceClienteLibre;j++)
+	{
+		printf ("\n\n******EL CLIENTE CON ID:  %d ******\n", listaCliente[j]);
+		info_imprimirComprasPorCliente(arrayCompras, limiteCompras, arrayCliente, limiteCliente, listaCliente[j]);
+	}
+return retorno;
+}
+
+
+
+int cli_clienteConCompras (Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int idCompra)
+{
+	int retorno = -1;
+	int i;
+	if (arrayCliente != NULL && limiteCliente >0){
+		retorno = 0;
+		for (i=0; i<limiteCliente; i++)
+		{
+			cli_imprimir(&arrayCliente [i]);
+		}
+	}
+	return retorno;
+}
+
