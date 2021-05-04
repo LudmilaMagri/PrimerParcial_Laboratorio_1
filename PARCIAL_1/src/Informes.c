@@ -66,7 +66,6 @@ int info3_imprimirSoloComprasPorCliente(Compras* arrayCompras, int limiteCompras
 	int retorno = -1;
 	int i;
 
-	//int contadorCompras =0;
 	if (arrayCompras!= NULL && limiteCompras>=0 &&arrayCliente != NULL && arrayCompras[idCliente].isEmpty == 0)
 	{
 		for (i=0; i<limiteCompras; i++)
@@ -76,10 +75,10 @@ int info3_imprimirSoloComprasPorCliente(Compras* arrayCompras, int limiteCompras
 				if (arrayCompras[i].idCliente == idCliente)//comparo a ver si son iguales el id que ingreso el usuario
 				{
 					printf ("\nID COMPRA: %-10d - DIRECCION: %-15s - COLOR: %-10s  - ID CLI: %-10d - ESTADO: %-10s \n", arrayCompras[i].idCompra, arrayCompras[i].direccion,arrayCompras[i].colorBarbijos, arrayCompras[i].idCliente, ESTADO[arrayCompras[i].estadoDeCompra]);
-					//contadorCompras++;
+
 				}
 			}
-		}//printf ("\nCantidad de Compras:\n");
+		}
 	}
 	return retorno;
 }
@@ -415,17 +414,17 @@ int info_imprimirClientes(Compras* arrayCompras, int limiteCompras, Cliente* arr
 	for (i=0; i<limiteCompras;i++)
 	{
 		flagCliente = 0;
-		if (arrayCompras[i].isEmpty==0) //si no esta vacio, lo analizo. Si esta vacio vuelvo al for
+		if (arrayCompras[i].isEmpty==0)
 		{
-			for (j=0; j<indiceClienteLibre;j++) //recorro con la j las dist posiciones de la lista de cuits
+			for (j=0; j<indiceClienteLibre;j++)
 			{
-				if (arrayCompras[i].idCliente == listaCliente[j]) //quiere decir que esta
+				if (arrayCompras[i].idCliente == listaCliente[j])
 				{
-					flagCliente = 1; //si es igual entra aca y no lo agrega a la lista
+					flagCliente = 1;
 					break;
 				}
 			}
-			if (flagCliente ==0) //cada vez que agrego un id
+			if (flagCliente ==0)
 			{
 				listaCliente[indiceClienteLibre] = arrayCompras[i].idCliente;
 				indiceClienteLibre++;

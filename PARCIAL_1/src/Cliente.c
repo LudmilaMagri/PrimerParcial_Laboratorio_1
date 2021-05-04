@@ -80,9 +80,9 @@ int cli_altaArray(Cliente* array, int limite, int indice, int* id)
 	int retorno = -1;
 	Cliente bufferCli;
 	if (array != NULL && limite>0 && indice<limite && indice >= 0 && id != NULL){
-		if (utn_getNombre(bufferCli.nombre,NOMBRE_LEN, "\nIngrese nombre", "\nError", 3)==0 &&
-			utn_getNombre(bufferCli.apellido, APELLIDO_LEN, "\nIngrese apellido?:", "\nError", 3) ==0 &&
-			utn_getCuit(bufferCli.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]", "\nError", 3)==0)
+		if (utn_getNombre(bufferCli.nombre,NOMBRE_LEN, "\nIngrese nombre\n", "\nError", 3)==0 &&
+			utn_getNombre(bufferCli.apellido, APELLIDO_LEN, "\nIngrese apellido?:\n", "\nError", 3) ==0 &&
+			utn_getCuit(bufferCli.cuit, CUIT_LEN, "\nIngrese cuit [xx-xxxxxxxx-x]\n", "\nError", 3)==0)
 		{
 			bufferCli.idCli =*id;
 			bufferCli.isEmpty = 0;
