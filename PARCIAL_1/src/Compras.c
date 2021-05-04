@@ -89,7 +89,7 @@ int com_altaArray(Compras* array, int limite, int indice, int idCompras, int idC
 	if (array != NULL && limite>0 && indice<limite && indice >= 0){
 		if (utn_getNumeroInt(&bufferCompras.cantBarbijos, "\nIngrese cantidad de barbijos\n", "\nError\n", 0, 10000, 3)==0 &&
 				utn_getDireccion(bufferCompras.direccion, DIRECCION_LEN, "\nIngrese la direccion\n", "\nError\n", 3) == 0 &&
-				utn_getTexto(bufferCompras.colorBarbijos, COLOR_BARBIJO, "\nIngrese el color del barbijo\n", "\nError\n", 3)==0)
+				utn_getTexto(bufferCompras.colorBarbijos, COLOR_BARBIJO, "\nIngrese el color del barbijo [azul/blanco]\n", "\nError\n", 3)==0)
 		{
 			printf ("\n ID CLIENTE: %d", idCliente);
 			printf ("\n ID COMPRA: %d", idCompras);
@@ -189,9 +189,6 @@ int com_getEmptyIndex (Compras* array, int limite)
 	return respuesta;
 }
 
-
-
-
 /*
  * \brief Ordenar el array de ... por ...
  * \param array Array de ..
@@ -272,7 +269,7 @@ int com_ordenarPorNombreAltura (Compras* array, int limite)
 */
 int com_altaArrayForzada (Compras* array, int limite, int indice, int cantBarbijos,
 							char* colorBarbijos, char* direccion,int* idCompra,
-							 int idCliente, int estadoDeCompra/*, int importePorUnidad*/)
+							 int idCliente, int estadoDeCompra, int importePorUnidad)
 {
 	int respuesta = -1;
 	Compras bufferCompra;
@@ -285,7 +282,7 @@ int com_altaArrayForzada (Compras* array, int limite, int indice, int cantBarbij
 		bufferCompra.idCompra = *idCompra;
 		bufferCompra.idCliente =idCliente;
 		bufferCompra.estadoDeCompra = estadoDeCompra;
-		//bufferCompra.importePorUnidad = importePorUnidad;
+		bufferCompra.importePorUnidad = importePorUnidad;
 		bufferCompra.isEmpty=0;
 		array[indice] = bufferCompra;
 		(*idCompra)++;

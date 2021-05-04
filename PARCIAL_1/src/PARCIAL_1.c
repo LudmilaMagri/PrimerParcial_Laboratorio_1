@@ -1,7 +1,7 @@
 /*
  ============================================================================
  Name        : PARCIAL_1.c
- Author      : 
+ Author      : LUDMILA MAGRI
  Version     :
  Copyright   : Your copyright notice
  Description : Hello World in C, Ansi-style
@@ -32,7 +32,6 @@ int main(void) {
 	int auxiliarIndice = 0;
 	int auxiliarIndiceCompra;
 	int auxiliarId;
-	char auxColor [COLOR_BARBIJO];
 	int opcionSubMenu;
 
 	if (cli_inicializarArray(arrayCliente, CLI_LEN) == 0)
@@ -49,11 +48,11 @@ int main(void) {
 	cli_altaArrayForzada(arrayCliente, CLI_LEN, 3, &idCliente, "Tom", "Riddle", "56-55555555-5");
 	cli_altaArrayForzada(arrayCliente, CLI_LEN, 4, &idCliente, "Ricardo", "Fort", "23-33333333-3");
 
-	com_altaArrayForzada(arrayCompra, COM_LEN, 0, 10, "azul", "Defensa 123", &idCompra, 1, 1/*, 100*/);
-	com_altaArrayForzada(arrayCompra, COM_LEN, 1, 35, "blanco", "Tacuari 555" , &idCompra, 2, 0/*, 60*/);
-	com_altaArrayForzada(arrayCompra, COM_LEN, 2, 20, "blanco", "Piedras 100", &idCompra, 3, 0/*, 10*/);
-	com_altaArrayForzada(arrayCompra, COM_LEN, 3, 80, "azul" , "Pilcomayo 700",&idCompra, 4, 0/*, 700*/);
-	com_altaArrayForzada(arrayCompra, COM_LEN, 4, 50, "azul", "Peru 234", &idCompra, 0, 1/*, 232*/);
+	com_altaArrayForzada(arrayCompra, COM_LEN, 0, 10, "azul", "Defensa 123", &idCompra, 1, 1, 100);
+	com_altaArrayForzada(arrayCompra, COM_LEN, 1, 35, "blanco", "Tacuari 555" , &idCompra, 2, 0, 60);
+	com_altaArrayForzada(arrayCompra, COM_LEN, 2, 20, "blanco", "Piedras 100", &idCompra, 3, 0, 10);
+	com_altaArrayForzada(arrayCompra, COM_LEN, 3, 80, "azul" , "Pilcomayo 700",&idCompra, 4, 0, 700);
+	com_altaArrayForzada(arrayCompra, COM_LEN, 4, 50, "azul", "Peru 234", &idCompra, 0, 1, 232);
 
 
 	do
@@ -70,11 +69,9 @@ int main(void) {
 							"\n*	6.  Cancelar compra"
 							"\n*	7.  Imprimir Clientes"
 							"\n*	8.  Listar compras"
-							"\n*	9.  Listar clientes"
-							"\n*	10. Informar"
-							"\n*	11. Salir"
+							"\n*	0. Salir"
 							"\n------------------------------------------------\n",
-							"\nError opcion invalida", 1, 11, 2))
+							"\nError opcion invalida", 0, 11, 2))
 		{
 			switch (opcionMenu)
 			{
@@ -85,13 +82,13 @@ int main(void) {
 					cli_cargarModificarArray(arrayCliente, CLI_LEN, auxiliarIndice);
 					break;
 			case 3:
-					case3(arrayCliente, CLI_LEN, arrayCompra, auxiliarId, COM_LEN);
+					info_bajaDeCliente(arrayCliente, CLI_LEN, arrayCompra, auxiliarId, COM_LEN);
 					break;
 			case 4:
 					auxiliarIndiceCompra = com_getEmptyIndex(arrayCompra, COM_LEN);
 					if (auxiliarIndiceCompra>= 0)
 					{
-						info_cargarComprasArray(arrayCompra, COM_LEN, arrayCliente, CLI_LEN, auxiliarIndiceCompra, &idCompra, idCliente);
+						info_realizarComprasArray(arrayCompra, COM_LEN, arrayCliente, CLI_LEN, auxiliarIndiceCompra, &idCompra, idCliente);
 					}
 					break;
 			case 5:
@@ -115,18 +112,18 @@ int main(void) {
 						if(!utn_getNumeroInt(&opcionSubMenu,
 											"\n\n"
 											"\n**************************************************"
-											"\n		***** MENU *****							\n"
+											"\n|		***** SUB-MENU *****					\n"
 											"\n|	1.  Color de barbijo mas comprado"
 											"\n|	2.  Cantidad de compras pendientes"
 											"\n|	3.  Compra con “precio por unidad” mas bajo"
 											"\n|	4. 	Volver al menu principal"
 											"\n*************************************************\n",
-											"\nError opcion invalida", 1, 11, 2))
+											"\nError opcion invalida", 0, 5, 2))
 						{
-							switch (opcionSubMenu)
+					switch (opcionSubMenu)
 					{
 						case 1:
-							info_colorBarbijoMasComprado(arrayCompra, COM_LEN, arrayCliente, CLI_LEN, auxColor);
+							info_colorBarbijoMasComprado(arrayCompra, COM_LEN);
 							break;
 						case 2:
 							info_cantComprasPendientes(arrayCompra, COM_LEN);
@@ -141,18 +138,11 @@ int main(void) {
 					while(opcionSubMenu!=4);
 
 					break;
-			case 9:
-					cli_imprimirArray(arrayCliente, CLI_LEN);
-					break;
-
-			case 10:
-				//	info_imprimirContratacionesPorCliente(arrayContratacion, CONTR_LEN, arrayPantalla, PANT_LEN, auxiliarCuit);
-					break;
 			}
 		}
-	}while (opcionMenu !=11);
+	}while (opcionMenu !=0);
 
-	if (opcionMenu == 11)
+	if (opcionMenu == 0)
 		printf ("\n*****¡¡¡HASTA LUEGO!!!*****");
 
 	return EXIT_SUCCESS;

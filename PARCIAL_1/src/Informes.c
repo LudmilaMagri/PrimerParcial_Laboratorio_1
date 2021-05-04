@@ -46,7 +46,7 @@ int info_imprimirClientes(Compras* arrayCompras, int limiteCompras, Cliente* arr
 	}
 	for(j=0; j<indiceClienteLibre;j++)
 	{
-		printf ("\n\n***El cliente con ID:  %d ***\n", listaCliente[j]);
+		printf ("\n\n******EL CLIENTE CON ID:  %d ******\n", listaCliente[j]);
 		info_imprimirComprasPorCliente(arrayCompras, limiteCompras, arrayCliente, limiteCliente, listaCliente[j]);
 	}
 return retorno;
@@ -81,7 +81,7 @@ int info_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cli
 				if (arrayCompras[i].idCliente == idCliente)//comparo a ver si son iguales el id que ingreso el usuario
 				{
 					auxIdCompra = arrayCompras[i].idCliente;  //del array de compras obtengo el id de ese cliente
-					indiceArrayCliente= cli_buscarId(arrayCliente, limiteCompras, auxIdCompra); //busco en el array de clientes el indice donde estan los datos de esos clie
+					indiceArrayCliente= cli_buscarId(arrayCliente, limiteCompras, auxIdCompra);
 					printf ("\nID COMPRA: %-5d - CANT DE BARBIJOS: %-5d- DIRECCION: %-15s - COLOR: %-5s - ID CLI: %-5d - ESTADO: %-10s - IMPORTE POR UNIDAD: %-5.2f", arrayCompras[i].idCompra, arrayCompras[i].cantBarbijos , arrayCompras[i].direccion,arrayCompras[i].colorBarbijos, arrayCompras[i].idCliente, ESTADO[arrayCompras[i].estadoDeCompra], arrayCompras[i].importePorUnidad);
 					contadorCompras++;
 				}
@@ -89,17 +89,16 @@ int info_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cli
 		}
 	}
 	printf ("\nID CLI: %-5d	- NOMBRE: %-10s	- APELLIDO: %-10s - CUIT: %-10s\n", arrayCliente[indiceArrayCliente].idCli, arrayCliente[indiceArrayCliente].nombre, arrayCliente[indiceArrayCliente].apellido, arrayCliente[indiceArrayCliente].cuit);
-	printf ("\nCantidad de Compras: %d\n", contadorCompras);
+	printf ("Cantidad de Compras: %d\n", contadorCompras);
 	return retorno;
 
 }
 
-int info3_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
+int info3_imprimirSoloComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
 {
 	int retorno = -1;
 	int i;
-	int indiceArrayCliente;
-	int auxIdCompra;
+
 	//int contadorCompras =0;
 	if (arrayCompras!= NULL && limiteCompras>=0 &&arrayCliente != NULL && arrayCompras[idCliente].isEmpty == 0)
 	{
@@ -109,8 +108,6 @@ int info3_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cl
 			{
 				if (arrayCompras[i].idCliente == idCliente)//comparo a ver si son iguales el id que ingreso el usuario
 				{
-					auxIdCompra = arrayCompras[i].idCliente;  //del array de compras obtengo el id de ese cliente
-					indiceArrayCliente= cli_buscarId(arrayCliente, limiteCompras, auxIdCompra); //busco en el array de clientes el indice donde estan los datos de esos clie
 					printf ("\nID COMPRA: %-10d - DIRECCION: %-15s - COLOR: %-10s  - ID CLI: %-10d - ESTADO: %-10s \n", arrayCompras[i].idCompra, arrayCompras[i].direccion,arrayCompras[i].colorBarbijos, arrayCompras[i].idCliente, ESTADO[arrayCompras[i].estadoDeCompra]);
 					//contadorCompras++;
 				}
@@ -121,11 +118,9 @@ int info3_imprimirComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cl
 }
 
 
-int info_cargarComprasArray(Compras* arrayCompra, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int indice, int* idCompras, int idCliente)
+int info_realizarComprasArray(Compras* arrayCompra, int limiteCompras, Cliente* arrayCliente, int limiteCliente, int indice, int* idCompras, int idCliente)
 {
 	int retorno = 0;
-	//int auxiliarIndiceCompra;
-	//auxiliarIndiceCompra= com_getEmptyIndex(arrayCompra, limiteCompras);
 	if (indice>= 0 )
 	{
 		if (utn_getNumeroInt(&idCliente, "\nIngrese el ID de cliente\n", "\nID inválido\n", 0, idCliente, 2)== 0 &&
@@ -141,8 +136,6 @@ int info_cargarComprasArray(Compras* arrayCompra, int limiteCompras, Cliente* ar
 	}
 	return retorno;
 }
-
-
 
 /*Pagar compra: Se pedirá el ID de la venta y se imprimirá la información del cliente al que pertenece, luego se
 ingresará el importe pagado por el cliente, y pedirá confirmación para cambiarse de estado y se cambiará al
@@ -229,36 +222,34 @@ int info_cancelarCompra(Compras* arrayCompras, int limiteCompras, Cliente* array
 	return retorno;
 }
 
-int delete_borrarComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
+int info_borrarComprasPorCliente(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente,  int idCliente)
+{
+	int retorno = -1;
+	int i;
+	if (arrayCompras!= NULL && limiteCompras>=0 &&arrayCliente != NULL && arrayCompras[idCliente].isEmpty == 0)
+	{
+		for (i=0; i<limiteCompras; i++)
 		{
-			int retorno = -1;
-			int i;
-			if (arrayCompras!= NULL && limiteCompras>=0 &&arrayCliente != NULL && arrayCompras[idCliente].isEmpty == 0)
+			if (arrayCompras[i].isEmpty==0)
 			{
-				for (i=0; i<limiteCompras; i++)
+				if (arrayCompras[i].idCliente == idCliente)//comparo a ver si son iguales el id que ingreso el usuario
 				{
-					if (arrayCompras[i].isEmpty==0)
-					{
-						if (arrayCompras[i].idCliente == idCliente)//comparo a ver si son iguales el id que ingreso el usuario
-						{
-							arrayCompras[i].isEmpty = 1;
-						}
-					}
+					arrayCompras[i].isEmpty = 1;
 				}
 			}
-			return retorno;
 		}
+	}
+	return retorno;
+}
 
-
-
-void case3(Cliente* arrayCliente,int limiteCliente,Compras* arrayCompras,int auxiliarId,int limiteCompras)
+void info_bajaDeCliente(Cliente* arrayCliente,int limiteCliente,Compras* arrayCompras,int auxiliarId,int limiteCompras)
 {
 	int respuesta;
 	cli_imprimirArray(arrayCliente, limiteCliente);
 
 	if(utn_getNumeroInt(&auxiliarId, "\nIngrese id de cliente\n", "\nError\n",0,10000, 3)==0)
 	{
-		info3_imprimirComprasPorCliente(arrayCompras, limiteCliente, arrayCliente, auxiliarId);
+		info3_imprimirSoloComprasPorCliente(arrayCompras, limiteCliente, arrayCliente, auxiliarId);
 	}
 	printf ("\nEsta seguro que desea eliminar al usuario: %s %s ?",arrayCliente[auxiliarId].nombre, arrayCliente[auxiliarId].apellido);
 	if (utn_getNumeroInt(&respuesta, "\n[SI: 1 / NO: 0)\n", "Error", 0, 2, 3)==0)
@@ -266,14 +257,13 @@ void case3(Cliente* arrayCliente,int limiteCliente,Compras* arrayCompras,int aux
 		if (respuesta == 1)
 		{
 			cli_bajarArray(arrayCliente, limiteCliente, auxiliarId);
-			//com_bajarArray(arrayCompra, COM_LEN, auxiliarId);
-			delete_borrarComprasPorCliente(arrayCompras, limiteCliente, arrayCliente, auxiliarId);
-			printf ("Se eliminó exitosamente al usuario %s", arrayCliente[auxiliarId].nombre);
+			info_borrarComprasPorCliente(arrayCompras, limiteCliente, arrayCliente, auxiliarId);
+			printf ("Se eliminó exitosamente al usuario %s %s", arrayCliente[auxiliarId].nombre, arrayCliente[auxiliarId].apellido);
 		}
 	}
 }
 
-int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras, Cliente* arrayCliente, int limiteCliente, char* color)
+int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras)
 {
 	int retorno = -1;
 	//char listaBarbijos [4][COLOR_BARBIJO];
@@ -285,24 +275,20 @@ int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras, Clien
 	int indiceColorLibre = 0;
 	char listaColor [COM_LEN][COLOR_BARBIJO];
 	int contador= 0;
-	int contador2=0;
 	for (i=0; i<limiteCompras;i++)
 	{
 		flag= 0;
 		if (arrayCompras[i].isEmpty == 0)
 		{	for (j=0; j<indiceColorLibre; j++)
 			{
-				if (strncmp(arrayCompras[i].colorBarbijos, listaColor[j], COLOR_BARBIJO) == 0) //quiere decir que esta
+				if (strncmp(arrayCompras[i].colorBarbijos, listaColor[j], COLOR_BARBIJO) == 0)
 				{
 					flag = 1;
-					printf ("\nENTREEEE\n");
-					contador2++;
 					break;
 				}
 			}
 			if (flag == 0)
 			{
-				printf ("\nentre\n");
 				strncpy(listaColor[indiceColorLibre], arrayCompras[i].colorBarbijos, COLOR_BARBIJO);
 				indiceColorLibre++;
 				contador++;
@@ -310,26 +296,27 @@ int info_colorBarbijoMasComprado(Compras* arrayCompras, int limiteCompras, Clien
 			if (strncmp(arrayCompras[i].colorBarbijos, "azul" , COLOR_BARBIJO)==0)
 			{
 				contadorAzul++;
-				printf ("\nAZUL\n");
 			}
-			if (strncmp(arrayCompras[i].colorBarbijos, "blanco", COLOR_BARBIJO)==0)
+			else if (strncmp(arrayCompras[i].colorBarbijos, "blanco", COLOR_BARBIJO)==0)
 			{
 				contadorBlanco++;
-				printf ("\nBLANCO\n");
 			}
 		}
 	}
 	if (contadorAzul> contadorBlanco)
 	{
-		printf ("\nHay mas cantidad de barbijos COLOR AZUL: %d\n", contadorAzul);
+		printf ("\nEl color de barbijo que tuvo mas compras fue el color azul.\n"
+				"Total de compras con barbijos azules: %d\n ", contadorAzul);
+	}
+	else if(contadorAzul< contadorBlanco)
+	{
+		printf ("\nEl color de barbijo que tuvo mas compras fue el color blanco.\n"
+				"Total de compras con barbijos blancos: %d\n ", contadorBlanco);
 	}
 	else
 	{
-		printf ("\nHay mas cantidad de barbijos COLOR BLANCO: %d\n", contadorAzul);
+		printf ("\nSe compro la misma cantidad de colores\n");
 	}
-
-		printf ("\nCOLOR AZUL: %d\n", contadorAzul);
-		printf ("Color BLANCO: %d", contadorBlanco);
 	return retorno;
 }
 
@@ -391,70 +378,3 @@ int info_compraPrecioPorUnidadMin(Compras* arrayCompras, int limiteCompras)
 	}
 	return retorno;
 }
-
-/*
-int pan_ordenarPorNombre (Pantalla* array, int limite)
-{
-	int respuesta = -1;
-	int i;
-	Pantalla buffer;
-	int flagSwap;
-	if(array != NULL && limite>0)
-	{
-		do
-		{
-			flagSwap = 0;
-			for (i=0; i<limite-1; i++)
-			{
-				if(array [i].isEmpty || array[i+1].isEmpty)
-				{
-					continue;
-				}
-				if (strncmp(array[i].nombre, array[i+1].nombre, NOMBRE_LEN) >0)
-				{
-					flagSwap = 1;
-					buffer = array[i];
-					array[i] = array[i+1];
-					array[i+1] = buffer;
-				}
-			}
-			limite--;
-		}while (flagSwap);
-	}
-	return respuesta;
-}
-*/
-/*
-int ordenarArrayInt (int* pArray, int limite)
-{
-	int flagSwap;
-	int i;
-	int contador=0;
-	int retorno = -1;
-	int buffer;
-	int nuevoLimite;
-
-	if (pArray != NULL && limite >= 0)
-	{
-		nuevoLimite= limite-1;
-		do
-		{
-			flagSwap=0;
-			for (i=0; i<nuevoLimite; i++)
-			{
-				if (pArray [i] > pArray [i+1]) //cuando el de la izq es mas grande
-				{
-					flagSwap= 1; //fuerza una nueva vuelta del while
-					buffer = pArray [i];
-					pArray[i] = pArray [i+1];
-					pArray [i+1] = buffer;
-				}
-				contador++;
-			}
-		}while (flagSwap);
-		retorno = contador;
-	}
-	return retorno;
-}
-
-*/

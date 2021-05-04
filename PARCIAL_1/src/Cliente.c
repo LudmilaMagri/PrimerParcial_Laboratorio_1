@@ -94,9 +94,9 @@ int cli_altaArray(Cliente* array, int limite, int indice, int* id)
 	return retorno;
 }
 /*
- * \brief Actualiza los datos de ... en una posicion del array
- * \param array Array de... a ser actualizados
- * \param limite Limite del array de ..
+ * \brief Actualiza los datos del cliente en una posicion del array
+ * \param array Array de clientes a ser actualizados
+ * \param limite Limite del array de clientes
  * \param indice Posicion a ser actualizado
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
@@ -118,6 +118,13 @@ int cli_modificarArray (Cliente* array, int limite, int indice)
 	}
 	return retorno;
 }
+/*
+ * \brief Actualiza los datos del cliente en una posicion del array
+ * \param array Array de clientes a ser actualizados
+ * \param limite Limite del array de clientes
+ * \param indice Posicion a ser actualizado
+ * \return Retorna 0 (EXITO) y -1 (ERROR)
+ */
 int cli_cargarModificarArray (Cliente* array, int limite, int indice)
 {
 	int retorno = 0;
@@ -141,8 +148,6 @@ int cli_cargarModificarArray (Cliente* array, int limite, int indice)
 	}
 		return retorno;
 }
-
-
 
 /*
  * \brief Actualiza una posicion del array
